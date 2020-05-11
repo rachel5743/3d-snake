@@ -29,6 +29,7 @@ document.body.appendChild(canvas);
 
 // Set up controls
 const controls = new OrbitControls(camera, canvas);
+controls.enablePan = false;
 controls.update();
 
 // Render loop

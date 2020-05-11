@@ -1,4 +1,4 @@
-import { Scene, Color, PlaneGeometry, MeshPhongMaterial, Mesh, DoubleSide, SphereGeometry } from 'three';
+import { Scene, Color, PlaneGeometry, MeshPhongMaterial, Mesh, DoubleSide, SphereGeometry, CubeCamera } from 'three';
 import { BasicLights } from 'lights';
 
 class SeedScene extends Scene {
@@ -35,6 +35,25 @@ class SeedScene extends Scene {
         // Make lights
         const lights = new BasicLights();
         this.add(lights);
+
+        // Get snake to move using WASD
+        document.addEventListener("keydown", onDocumentKeyDown, false);
+        function onDocumentKeyDown(event) {
+            switch (event.keyCode) {
+                case 87: // w
+                    sphere.position.z += 1;
+                    break;
+                case 65: // a
+                    sphere.position.x += 1;
+                    break;
+                case 83: // s
+                    sphere.position.z -= 1;
+                    break;
+                case 68: // d
+                    sphere.position.x -= 1;
+                    break;
+            }
+        }
 
     }
 

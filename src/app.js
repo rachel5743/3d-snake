@@ -29,7 +29,6 @@ document.body.appendChild(canvas);
 
 // Set up controls
 const controls = new OrbitControls(camera, canvas);
-//ontrols.minDistance = 50;
 controls.update();
 
 // Render loop

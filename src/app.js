@@ -12,7 +12,7 @@ import { SeedScene } from 'scenes';
 
 // Initialize core ThreeJS components
 const scene = new SeedScene();
-const camera = new PerspectiveCamera();
+const camera = new PerspectiveCamera(45, window.width/window.height, 1, 10000);
 const renderer = new WebGLRenderer({ antialias: true });
 
 // Set up camera
@@ -29,18 +29,15 @@ document.body.appendChild(canvas);
 
 // Set up controls
 const controls = new OrbitControls(camera, canvas);
-controls.enableDamping = true;
-controls.enablePan = false;
 controls.minDistance = 4;
 controls.maxDistance = 16;
 controls.update();
 
 // Render loop
 const onAnimationFrameHandler = (timeStamp) => {
+    window.requestAnimationFrame(onAnimationFrameHandler);
     controls.update();
     renderer.render(scene, camera);
-    scene.update && scene.update(timeStamp);
-    window.requestAnimationFrame(onAnimationFrameHandler);
 };
 window.requestAnimationFrame(onAnimationFrameHandler);
 

@@ -1,4 +1,4 @@
-import { Scene, Color, PlaneGeometry, MeshPhongMaterial, Mesh, DoubleSide } from 'three';
+import { Scene, Color, PlaneGeometry, MeshPhongMaterial, Mesh, DoubleSide, SphereGeometry } from 'three';
 import { BasicLights } from 'lights';
 
 class SeedScene extends Scene {
@@ -15,7 +15,7 @@ class SeedScene extends Scene {
         this.background = new Color(0x7ec0ee);
 
         // Make a plane for the snake to roll around in 
-        var geometry = new PlaneGeometry(50, 50, 32);
+        var geometry = new PlaneGeometry(100, 100, 32);
         var material = new MeshPhongMaterial( { color: 0xD2B48C, side: DoubleSide } );
         var plane = new Mesh(geometry, material);
 
@@ -23,6 +23,15 @@ class SeedScene extends Scene {
 
         this.add(plane);
 
+        // Make a basic snake head sphere
+        var sphereGeom = new SphereGeometry(1, 32, 32);
+        var sphereMat = new MeshPhongMaterial( { color: 0x008900 } );
+        var sphere = new Mesh(sphereGeom, sphereMat);
+
+        sphere.position.y = 1;
+
+        this.add(sphere);
+    
         // Make lights
         const lights = new BasicLights();
         this.add(lights);

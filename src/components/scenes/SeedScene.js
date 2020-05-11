@@ -39,16 +39,21 @@ class SeedScene extends Scene {
         // Get snake to move using WASD
         document.addEventListener("keydown", onDocumentKeyDown, false);
         function onDocumentKeyDown(event) {
+            // This code thanks to https://threejs.org/examples/misc_controls_pointerlock.html
             switch (event.keyCode) {
+                case 38: // up
                 case 87: // w
                     sphere.position.z += 1;
                     break;
+                case 37: // left
                 case 65: // a
                     sphere.position.x += 1;
                     break;
+                case 40: // down
                 case 83: // s
                     sphere.position.z -= 1;
                     break;
+                case 39: // right
                 case 68: // d
                     sphere.position.x -= 1;
                     break;

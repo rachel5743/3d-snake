@@ -3,25 +3,27 @@ import { Group, SphereGeometry, MeshPhongMaterial, Mesh, Vector3 } from 'three';
 class Snake extends Group {
 
     // Initializes a moving snake head
-    constructor() {
+    constructor(camera) {
 
         // Call parent constructor
         super();
 
         // Snake state: stores array of segments
         this.state = {
-            direction: 0, // default: no movement
+            camera: camera,
+            direction: 0, // relative direction of snake. 0: no movement
             segmentList: []
         };
 
         // Bindings
         var onDocumentKeyDown = this.onDocumentKeyDown.bind(this);
         this.moveSnake.bind(this);
+        this.moveUp.bind(this);
+        this.moveRight.bind(this);
+        this.moveDown.bind(this);
+        this.moveLeft.bind(this);
 
         // Initialize snake head
-        this.addSegment();
-        this.addSegment();
-        this.addSegment();
         this.addSegment();
         this.addSegment();
         this.addSegment();
@@ -51,18 +53,81 @@ class Snake extends Group {
         this.add(sphere);                    // add sphere to Snake
     }
 
-    // Keydown event listener that calls moveSnake
+    // Keydown event listener that adjusts snake's direction
     onDocumentKeyDown(event) {
-        this.state.direction = event.keyCode;
-        //this.moveSnake(event.keyCode); <-- alt. implementation: this gives snake ability to speed up
+        // Only listen for valid keypresses
+        var validKeypresses = [38, 37, 40, 39];
+        if (!validKeypresses.includes(event.keyCode)) return;
+
+        // If snake not previously moving, relative direction = absolute direction specified
+        if (this.state.direction == 0) {
+            this.state.direction = event.keyCode;
+            return;
+        }
+
+        // Otherwise (if snake is already moving), adjust relative direction
+        var originalDirection = this.state.direction;
+        switch (event.keyCode) {
+            case 38:
+                break;
+
+            case 37:
+                switch (originalDirection) {
+                    case 38:
+                        this.state.direction = 37;
+                        break;
+                    case 37:
+                        this.state.direction = 40;
+                        break;
+                    case 40:
+                        this.state.direction = 39;
+                        break;
+                    case 39:
+                        this.state.direction = 38;
+                        break;
+                }
+                break;
+        
+            case 40:
+                switch (originalDirection) {
+                    case 38:
+                        this.state.direction = 40;
+                        break;
+                    case 37:
+                        this.state.direction = 39;
+                        break;
+                    case 40:
+                        this.state.direction = 38;
+                        break;
+                    case 39:
+                        this.state.direction = 37;
+                        break;
+                }
+                break;
+
+            case 39:
+                switch (originalDirection) {
+                    case 38:
+                        this.state.direction = 39;
+                        break;
+                    case 37:
+                        this.state.direction = 38;
+                        break;
+                    case 40:
+                        this.state.direction = 37;
+                        break;
+                    case 39:
+                        this.state.direction = 40;
+                        break;
+                }
+                break;
+        }
     }
 
     // Snake moves using WASD and arrow keys
     moveSnake(keyCode) {
         var validKeypresses = [38, 87, 37, 65, 40, 83, 39, 68];
         if (!validKeypresses.includes(keyCode)) return;
-        
-        this.state.isMoving = true;
 
         // Update positions
         var numSegments = this.state.segmentList.length; 
@@ -74,26 +139,19 @@ class Snake extends Group {
             // If the head, move in the appropriate direction
             // This code loosely adapted from https://threejs.org/examples/misc_controls_pointerlock.html
             if (i == 0) {
-                switch (keyCode) {
-                    case 38: // up
-                    case 87: // w
-                        this.state.direction = 38;
-                        currSegment.position.z += segmentDist;
+                // Move head in specified (absolute) direction
+                switch (this.state.direction) {
+                    case 38:
+                        this.moveUp(currSegment, segmentDist);
                         break;
-                    case 37: // left
-                    case 65: // a
-                        this.state.direction = 37;
-                        currSegment.position.x += segmentDist;
+                    case 37:
+                        this.moveLeft(currSegment, segmentDist);
                         break;
-                    case 40: // down
-                    case 83: // s
-                        this.state.direction = 40;
-                        currSegment.position.z -= segmentDist;
+                    case 40:
+                        this.moveDown(currSegment, segmentDist);
                         break;
-                    case 39: // right
-                    case 68: // d
-                        this.state.direction = 39;
-                        currSegment.position.x -= segmentDist;
+                    case 39:
+                        this.moveRight(currSegment, segmentDist);
                         break;
                 }
             }
@@ -106,6 +164,36 @@ class Snake extends Group {
                 currSegment.position.z = segmentInFront.position.z;
             }
         }
+    }
+
+    // Helper functions for movement
+    // Absolute directions for the snake 
+    moveUp(currSegment, segmentDist) {
+        this.state.direction = 38;
+        currSegment.position.z += segmentDist;
+        this.state.camera.position.z += segmentDist;
+        this.state.camera.lookAt(currSegment.position.x, 1, 50);
+    }
+
+    moveLeft(currSegment, segmentDist) {
+        this.state.direction = 37;
+        currSegment.position.x += segmentDist;
+        this.state.camera.position.x += segmentDist;
+        this.state.camera.lookAt(50, 1, currSegment.position.z);
+    }
+
+    moveDown(currSegment, segmentDist) {
+        this.state.direction = 40;
+        currSegment.position.z -= segmentDist;
+        this.state.camera.position.z -= segmentDist;
+        this.state.camera.lookAt(currSegment.position.x, 1, -50);
+    }
+
+    moveRight(currSegment, segmentDist) {
+        this.state.direction = 39;
+        currSegment.position.x -= segmentDist;
+        this.state.camera.position.x -= segmentDist;
+        this.state.camera.lookAt(-50, 1, currSegment.position.z);
     }
 }
 

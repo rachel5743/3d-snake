@@ -11,13 +11,16 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import { SeedScene } from 'scenes';
 
 // Initialize core ThreeJS components
-const scene = new SeedScene();
 const camera = new PerspectiveCamera(45, window.width/window.height, 1, 10000);
+const scene = new SeedScene(camera);
 const renderer = new WebGLRenderer({ antialias: true });
 
 // Set up camera
-camera.position.set(0, 100, -100);
-camera.lookAt(new Vector3(0, 0, 0));
+//camera.position.set(0, 100, -100);
+var snakeHeadPos = scene.state.snake.state.segmentList[0].position;
+camera.position.set(1, 1, 1);
+//camera.lookAt(new Vector3(0, 0, 0));
+camera.lookAt(new Vector3(0, 1, 50));
 
 // Set up renderer, canvas, and minor CSS adjustments
 renderer.setPixelRatio(window.devicePixelRatio);
@@ -28,14 +31,14 @@ document.body.style.overflow = 'hidden'; // Fix scrolling
 document.body.appendChild(canvas);
 
 // Set up controls
-const controls = new OrbitControls(camera, canvas);
-controls.enablePan = false;
-controls.update();
+// const controls = new OrbitControls(camera, canvas);
+// controls.enablePan = false;
+// controls.update();
 
 // Render loop
 const onAnimationFrameHandler = (timeStamp) => {
     window.requestAnimationFrame(onAnimationFrameHandler);
-    controls.update();
+    //controls.update();
     scene.update && scene.update(timeStamp);
     renderer.render(scene, camera);
 };

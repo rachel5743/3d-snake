@@ -4,12 +4,13 @@ import { Snake, FarmHouse, FenceGroup, Pool } from 'objects';
 import TreeGroup from '../objects/TreeGroup';
 
 class SeedScene extends Scene {
-    constructor() {
+    constructor(camera) {
         // Call parent Scene() constructor
         super();
 
         // Init state
         this.state = {
+            snake: null,
             updateList: []
         };
 
@@ -17,7 +18,7 @@ class SeedScene extends Scene {
         this.background = new Color(0x87ceeb);
 
         // Make a plane for the snake to roll around in 
-        // Texture thanks to https://mebiusbox.github.io/contents/EffectTextureMaker/
+        // Texture made with the help of https://mebiusbox.github.io/contents/EffectTextureMaker/
         var grassTexture = new TextureLoader().load('src/textures/grassTexture.jpg');
         var geometry = new PlaneGeometry(100, 100, 32);
         var material = new MeshPhongMaterial( { color: 0xD2B48C, side: DoubleSide, map: grassTexture } );
@@ -26,8 +27,9 @@ class SeedScene extends Scene {
         this.add(plane);
 
         // Add snake
-        var snake = new Snake();
+        var snake = new Snake(camera);
         this.add(snake);
+        this.state.snake = snake;
 
         // Make snake move automatically (should this be in Snake.js?)
         window.setInterval(function() {

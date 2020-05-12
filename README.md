@@ -31,6 +31,8 @@ All of the models in this game were gratefully downloaded from the Google Poly p
 
 The grass texture used (`src/textures/grassTexture.jpg`) was made with the help of [this texture maker](https://mebiusbox.github.io/contents/EffectTextureMaker/).
 
+When implementing movement of the Snake, the code written was loosely adapted from / inspired by [this three.js example](https://threejs.org/examples/misc_controls_pointerlock.html) - specifically, the keypress eventCode switch statements, how to pick up on `"keydown"` with an `eventListener`, and the general structure of the approach.
+
 For starter code, we originally utilized [the skeleton project of Reilly Bova '20](https://github.com/ReillyBova/three-seed), itself adapted from [edwinwebb's ThreeJS seed project](https://github.com/edwinwebb/three-seed]).
 
 ## License

@@ -10,15 +10,18 @@ class Snake extends Group {
 
         // Snake state: stores array of segments
         this.state = {
-            head: Mesh,
-            tail: Mesh,
-            tailPrevPos: Vector3,
             segmentList: []
         };
         
         // Initialize
         this.addSegment();
-        this.addSegment();
+        // For debugging: more segments should be added when points collision
+        // this.addSegment();
+        // this.addSegment();
+        // this.addSegment();
+        // this.addSegment();
+        // this.addSegment();
+        // this.addSegment();
 
         // Get snake to move using WASD and arrow keys
         var onDocumentKeyDown = this.onDocumentKeyDown.bind(this);
@@ -31,19 +34,15 @@ class Snake extends Group {
         var material = new MeshPhongMaterial( { color: 0x008900 } );
         var sphere = new Mesh(geometry, material);
 
-        // Snake head case
+        // Snake's head case
         if (this.state.segmentList.length == 0) {
             sphere.position.set(0, 1, 0);
-            this.state.head = sphere;
         }
         else {
             // Add new sphere at tail segment's previous position
-            //sphere.position.set(this.state.tailPrevPos.x, this.state.tailPrevPos.y, this.state.tailPrevPos.z);
-            sphere.position.set(2, 1, 0);
+            var tailSegment = this.state.segmentList[this.state.segmentList.length-1];
+            sphere.position.set(tailSegment.x, tailSegment.y, tailSegment.z);
         }
-
-        // Update tail and previous tail position
-        this.state.tail = sphere;
 
         this.state.segmentList.push(sphere); // update internal state
         this.add(sphere);                    // add sphere to Snake
@@ -52,34 +51,45 @@ class Snake extends Group {
     // Snake moves using WASD and arrow keys
     onDocumentKeyDown(event) {
 
-        this.tailPrevPos = this.state.tail.position; // store previous tail position
+        // This code loosely adapted from https://threejs.org/examples/misc_controls_pointerlock.html
+        var validKeypresses = [38, 87, 37, 65, 40, 83, 39, 68];
+        if (!validKeypresses.includes(event.keyCode)) return;
 
-        // This code thanks to https://threejs.org/examples/misc_controls_pointerlock.html
-        switch (event.keyCode) {
-            case 38: // up
-            case 87: // w
-                this.state.segmentList.forEach(segment => {
-                    segment.position.z += 1;
-                });
-                break;
-            case 37: // left
-            case 65: // a
-                this.state.segmentList.forEach(segment => {
-                    segment.position.x += 1;
-                });
-                break;
-            case 40: // down
-            case 83: // s
-                this.state.segmentList.forEach(segment => {
-                    segment.position.z -= 1;
-                });
-                break;
-            case 39: // right
-            case 68: // d
-                this.state.segmentList.forEach(segment => {
-                    segment.position.x -= 1;
-                });
-                break;
+        // Update positions
+        var numSegments = this.state.segmentList.length; 
+        for (var i = numSegments - 1; i >= 0; i--) {
+
+            var currSegment = this.state.segmentList[i];
+
+            // If the head, move in the appropriate direction
+            if (i == 0) {
+                switch (event.keyCode) {
+                    case 38: // up
+                    case 87: // w
+                        currSegment.position.z += 2;
+                        break;
+                    case 37: // left
+                    case 65: // a
+                        currSegment.position.x += 2;
+                        break;
+                    case 40: // down
+                    case 83: // s
+                        currSegment.position.z -= 2;
+                        break;
+                    case 39: // right
+                    case 68: // d
+                        currSegment.position.x -= 2;
+                        break;
+                }
+            }
+            // Otherwise, each segment takes the position of the segment in front of it 
+            else {
+                var segmentInFront = this.state.segmentList[i-1];
+
+                currSegment.position.x = segmentInFront.position.x;
+                currSegment.position.y = segmentInFront.position.y;
+                currSegment.position.z = segmentInFront.position.z;
+            }
         }
     }
 }

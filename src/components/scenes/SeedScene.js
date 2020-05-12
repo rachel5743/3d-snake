@@ -1,4 +1,4 @@
-import { Scene, Color, PlaneGeometry, MeshPhongMaterial, Mesh, DoubleSide, SphereGeometry } from 'three';
+import { Scene, Color, PlaneGeometry, MeshPhongMaterial, Mesh, DoubleSide, TextureLoader } from 'three';
 import { BasicLights } from 'lights';
 import { Snake } from 'objects';
 
@@ -16,8 +16,9 @@ class SeedScene extends Scene {
         this.background = new Color(0x7ec0ee);
 
         // Make a plane for the snake to roll around in 
+        var grassTexture = new TextureLoader().load('src/textures/grassTexture.jpg');
         var geometry = new PlaneGeometry(100, 100, 32);
-        var material = new MeshPhongMaterial( { color: 0xD2B48C, side: DoubleSide } );
+        var material = new MeshPhongMaterial( { color: 0xD2B48C, side: DoubleSide, map: grassTexture } );
         var plane = new Mesh(geometry, material);
         plane.rotation.x = ( -Math.PI / 2); // make it a floor
         this.add(plane);

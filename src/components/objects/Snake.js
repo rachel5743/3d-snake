@@ -20,12 +20,6 @@ class Snake extends Group {
 
         // Initialize snake head
         this.addSegment();
-        this.addSegment();
-        this.addSegment();     
-        this.addSegment();
-        this.addSegment();
-        this.addSegment();
-        this.addSegment();
 
         // Get snake to move using WASD and arrow keys
         document.addEventListener("keydown", onDocumentKeyDown, false);
@@ -34,7 +28,7 @@ class Snake extends Group {
     // Add sphere unit to snake body (called when snake grows)
     addSegment() {
         var geometry = new SphereGeometry(1, 32, 32);
-        var material = new MeshPhongMaterial( { color: 0x008900 } );
+        var material = new MeshPhongMaterial( { color: 0xFF6347 } );
         var sphere = new Mesh(geometry, material);
 
         // Snake's head case

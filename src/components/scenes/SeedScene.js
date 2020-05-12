@@ -25,6 +25,13 @@ class SeedScene extends Scene {
         // Add snake
         var snake = new Snake();
         this.add(snake);
+
+        // Make snake move automatically (should this be in Snake.js?)
+        window.setInterval(function() {
+            if (snake.state.direction != 0) {
+                snake.moveSnake(snake.state.direction);
+            }
+        }, 100);
         
         // Make lights
         const lights = new BasicLights();

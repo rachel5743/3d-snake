@@ -10,21 +10,18 @@ class Snake extends Group {
 
         // Snake state: stores array of segments
         this.state = {
+            direction: 0, // default: no movement
             segmentList: []
         };
-        
-        // Initialize
-        this.addSegment();
-        // For debugging: more segments should be added when points collision
-        // this.addSegment();
-        // this.addSegment();
-        // this.addSegment();
-        // this.addSegment();
-        // this.addSegment();
-        // this.addSegment();
+
+        // Bindings
+        var onDocumentKeyDown = this.onDocumentKeyDown.bind(this);
+        this.moveSnake.bind(this);
+
+        // Initialize snake head
+        this.addSegment();      
 
         // Get snake to move using WASD and arrow keys
-        var onDocumentKeyDown = this.onDocumentKeyDown.bind(this);
         document.addEventListener("keydown", onDocumentKeyDown, false);
     }
 
@@ -48,12 +45,19 @@ class Snake extends Group {
         this.add(sphere);                    // add sphere to Snake
     }
 
-    // Snake moves using WASD and arrow keys
+    // Keydown event listener that calls moveSnake
     onDocumentKeyDown(event) {
+        this.moveSnake(event.keyCode);
+    }
+
+    // Snake moves using WASD and arrow keys
+    moveSnake(keyCode) {
 
         // This code loosely adapted from https://threejs.org/examples/misc_controls_pointerlock.html
         var validKeypresses = [38, 87, 37, 65, 40, 83, 39, 68];
-        if (!validKeypresses.includes(event.keyCode)) return;
+        if (!validKeypresses.includes(keyCode)) return;
+        
+        this.state.isMoving = true;
 
         // Update positions
         var numSegments = this.state.segmentList.length; 
@@ -63,21 +67,25 @@ class Snake extends Group {
 
             // If the head, move in the appropriate direction
             if (i == 0) {
-                switch (event.keyCode) {
+                switch (keyCode) {
                     case 38: // up
                     case 87: // w
+                        this.state.direction = 38;
                         currSegment.position.z += 2;
                         break;
                     case 37: // left
                     case 65: // a
+                        this.state.direction = 37;
                         currSegment.position.x += 2;
                         break;
                     case 40: // down
                     case 83: // s
+                        this.state.direction = 40;
                         currSegment.position.z -= 2;
                         break;
                     case 39: // right
                     case 68: // d
+                        this.state.direction = 39;
                         currSegment.position.x -= 2;
                         break;
                 }

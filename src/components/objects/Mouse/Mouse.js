@@ -2,7 +2,7 @@ import { Group } from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import MODEL from './Mouse.glb';
 
-// https://poly.google.com
+// https://poly.google.com/view/6DOjEGKd8nx
 class Mouse extends Group {
 
     constructor(parent) {
@@ -15,8 +15,9 @@ class Mouse extends Group {
 
         loader.load(MODEL, (gltf) => {
             this.add(gltf.scene);
-            gltf.scene.position.set(0, 1, 0);
-            //gltf.scene.position.set(Math.floor(Math.random()*97) - 48, 1, Math.floor(Math.random()*97) - 48);
+            //gltf.scene.position.set(20, 0, 20);
+            
+            gltf.scene.position.set(Math.floor(Math.random()*97) - 48, 0, Math.floor(Math.random()*97) - 48);
             //gltf.scene.rotateY(Math.PI);
         });
     }

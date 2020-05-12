@@ -1,7 +1,8 @@
 import { Scene, Color, PlaneGeometry, MeshPhongMaterial, Mesh, DoubleSide, TextureLoader } from 'three';
 import { BasicLights } from 'lights';
-import { Snake, FarmHouse, FenceGroup, Pool } from 'objects';
+import { Snake, FarmHouse, FenceGroup, Pool, Mouse} from 'objects';
 import TreeGroup from '../objects/TreeGroup';
+//import Mouse from '../objects/Mouse';
 
 class SeedScene extends Scene {
     constructor(camera) {
@@ -31,20 +32,30 @@ class SeedScene extends Scene {
         this.add(snake);
         this.state.snake = snake;
 
+        //randomly place mice
+        var mouse = new Mouse();
+        this.add(mouse);
+
+        //track points
+        var score = 0;
+
         // Make snake move automatically (should this be in Snake.js?)
         window.setInterval(function() {
             if (snake.state.direction != 0) {
                 snake.moveSnake(snake.state.direction);
             }
+            if (Math.abs(mouse.position.x - snake.state.segmentList[0].position.x) < 2 && 
+            Math.abs(mouse.position.x - snake.state.segmentList[0].position.x) < 2) {
+                mouse.position.x = Math.floor(Math.random()*97) - 48;
+                mouse.position.z = Math.floor(Math.random()*97) - 48;
+                snake.addSegment();
+                score ++;
+            }
         }, 100);
         
-        //track points
-        var score = 0;
+       
         
 
-        //randomly place mice
-        /*var mouse = new Mouse();
-        this.add(mouse);*/
         /*
         var pointGeom = new SphereGeometry(1, 32, 32);
         var pointMat = new MeshPhongMaterial({color: 0xffff00});

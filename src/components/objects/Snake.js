@@ -19,7 +19,13 @@ class Snake extends Group {
         this.moveSnake.bind(this);
 
         // Initialize snake head
-        this.addSegment();      
+        this.addSegment();
+        this.addSegment();
+        this.addSegment();     
+        this.addSegment();
+        this.addSegment();
+        this.addSegment();
+        this.addSegment();
 
         // Get snake to move using WASD and arrow keys
         document.addEventListener("keydown", onDocumentKeyDown, false);
@@ -47,13 +53,12 @@ class Snake extends Group {
 
     // Keydown event listener that calls moveSnake
     onDocumentKeyDown(event) {
-        this.moveSnake(event.keyCode);
+        this.state.direction = event.keyCode;
+        //this.moveSnake(event.keyCode); <-- alt. implementation: this gives snake ability to speed up
     }
 
     // Snake moves using WASD and arrow keys
     moveSnake(keyCode) {
-
-        // This code loosely adapted from https://threejs.org/examples/misc_controls_pointerlock.html
         var validKeypresses = [38, 87, 37, 65, 40, 83, 39, 68];
         if (!validKeypresses.includes(keyCode)) return;
         
@@ -64,29 +69,31 @@ class Snake extends Group {
         for (var i = numSegments - 1; i >= 0; i--) {
 
             var currSegment = this.state.segmentList[i];
+            var segmentDist = 1.5; // adjust snake body style
 
             // If the head, move in the appropriate direction
+            // This code loosely adapted from https://threejs.org/examples/misc_controls_pointerlock.html
             if (i == 0) {
                 switch (keyCode) {
                     case 38: // up
                     case 87: // w
                         this.state.direction = 38;
-                        currSegment.position.z += 2;
+                        currSegment.position.z += segmentDist;
                         break;
                     case 37: // left
                     case 65: // a
                         this.state.direction = 37;
-                        currSegment.position.x += 2;
+                        currSegment.position.x += segmentDist;
                         break;
                     case 40: // down
                     case 83: // s
                         this.state.direction = 40;
-                        currSegment.position.z -= 2;
+                        currSegment.position.z -= segmentDist;
                         break;
                     case 39: // right
                     case 68: // d
                         this.state.direction = 39;
-                        currSegment.position.x -= 2;
+                        currSegment.position.x -= segmentDist;
                         break;
                 }
             }

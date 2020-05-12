@@ -1,6 +1,6 @@
 import { Scene, Color, PlaneGeometry, MeshPhongMaterial, Mesh, DoubleSide, TextureLoader } from 'three';
 import { BasicLights } from 'lights';
-import { Snake } from 'objects';
+import { Snake, FarmHouse, FenceGroup } from 'objects';
 
 class SeedScene extends Scene {
     constructor() {
@@ -16,6 +16,7 @@ class SeedScene extends Scene {
         this.background = new Color(0x7ec0ee);
 
         // Make a plane for the snake to roll around in 
+        // Texture thanks to https://mebiusbox.github.io/contents/EffectTextureMaker/
         var grassTexture = new TextureLoader().load('src/textures/grassTexture.jpg');
         var geometry = new PlaneGeometry(100, 100, 32);
         var material = new MeshPhongMaterial( { color: 0xD2B48C, side: DoubleSide, map: grassTexture } );
@@ -37,6 +38,13 @@ class SeedScene extends Scene {
         // Make lights
         const lights = new BasicLights();
         this.add(lights);
+
+        // Add decorative items
+        var farmhouse = new FarmHouse();
+        this.add(farmhouse);
+
+        var fence = new FenceGroup();
+        this.add(fence);
     }
 
     addToUpdateList(object) {

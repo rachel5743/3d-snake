@@ -20,6 +20,12 @@ class Snake extends Group {
 
         // Initialize snake head
         this.addSegment();
+        this.addSegment();
+        this.addSegment();
+        this.addSegment();
+        this.addSegment();
+        this.addSegment();
+        this.addSegment();
 
         // Get snake to move using WASD and arrow keys
         document.addEventListener("keydown", onDocumentKeyDown, false);

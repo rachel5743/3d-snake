@@ -38,6 +38,23 @@ class SeedScene extends Scene {
             }
         }, 100);
         
+        //track points
+        var score = 0;
+        
+
+        //randomly place mice
+        /*var mouse = new Mouse();
+        this.add(mouse);*/
+        /*
+        var pointGeom = new SphereGeometry(1, 32, 32);
+        var pointMat = new MeshPhongMaterial({color: 0xffff00});
+        var point = new Mesh(sphereGeom, pointMat);
+        point.position.y = 1;
+        point.position.x = Math.floor(Math.random()*97) - 48;
+        point.position.z = Math.floor(Math.random()*97) - 48;
+        this.add(point);*/
+
+    
         // Make lights
         const lights = new BasicLights();
         this.add(lights);
@@ -66,6 +83,8 @@ class SeedScene extends Scene {
             obj.update(timeStamp);
         }
     }
+
 }
+
 
 export default SeedScene;

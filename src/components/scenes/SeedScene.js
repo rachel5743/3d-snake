@@ -28,6 +28,22 @@ class SeedScene extends Scene {
         var sphereMat = new MeshPhongMaterial( { color: 0x008900 } );
         var sphere = new Mesh(sphereGeom, sphereMat);
 
+        //track points
+        var score = 0;
+        
+
+        //randomly place mice
+        /*var mouse = new Mouse();
+        this.add(mouse);*/
+        /*
+        var pointGeom = new SphereGeometry(1, 32, 32);
+        var pointMat = new MeshPhongMaterial({color: 0xffff00});
+        var point = new Mesh(sphereGeom, pointMat);
+        point.position.y = 1;
+        point.position.x = Math.floor(Math.random()*97) - 48;
+        point.position.z = Math.floor(Math.random()*97) - 48;
+        this.add(point);*/
+
         sphere.position.y = 1;
 
         this.add(sphere);
@@ -58,6 +74,13 @@ class SeedScene extends Scene {
                     sphere.position.x -= 1;
                     break;
             }
+            /*if (Math.abs(sphere.position.x - mouse.position.x) < 2 && Math.abs(sphere.position.z - mouse.position.z) < 2) {
+                mouse.position.x = Math.floor(Math.random()*97) - 48;
+                mouse.position.z = Math.floor(Math.random()*97) - 48;
+                score ++;
+                
+            }*/
+
         }
 
     }
@@ -72,6 +95,8 @@ class SeedScene extends Scene {
             obj.update(timeStamp);
         }
     }
+
 }
+
 
 export default SeedScene;

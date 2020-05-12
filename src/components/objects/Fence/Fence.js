@@ -1,6 +1,6 @@
 import { Group } from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
-import MODEL from './Fence.glb';
+import MODEL from './fence.glb';
 
 // https://poly.google.com/view/8r5ZAEhrppD
 class Fence extends Group {

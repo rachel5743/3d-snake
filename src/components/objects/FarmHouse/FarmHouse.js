@@ -15,7 +15,7 @@ class FarmHouse extends Group {
 
         loader.load(MODEL, (gltf) => {
             this.add(gltf.scene);
-            gltf.scene.position.set(-37, 0.5, 40);
+            gltf.scene.position.set(-37, 0.1, 40);
             gltf.scene.rotateY(Math.PI);
         });
     }

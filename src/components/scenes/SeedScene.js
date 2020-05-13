@@ -1,4 +1,4 @@
-import { Scene, Color, PlaneGeometry, MeshPhongMaterial, Mesh, DoubleSide, TextureLoader } from 'three';
+import { Scene, Color, PlaneGeometry, MeshPhongMaterial, Mesh, DoubleSide, TextureLoader, FontLoader, TextGeometry } from 'three';
 import { BasicLights } from 'lights';
 import { Snake, FarmHouse, FenceGroup, Pool, Mouse} from 'objects';
 import TreeGroup from '../objects/TreeGroup';
@@ -39,19 +39,46 @@ class SeedScene extends Scene {
         //track points
         var score = 0;
 
+        //text loader to display score at end
+        var loader = new FontLoader();
+
         // Make snake move automatically (should this be in Snake.js?)
         window.setInterval(function() {
             if (snake.state.direction != 0) {
                 snake.moveSnake(snake.state.direction);
             }
-            if (Math.abs(mouse.position.x - snake.state.segmentList[0].position.x) < 2 && 
-            Math.abs(mouse.position.x - snake.state.segmentList[0].position.x) < 2) {
-                mouse.position.x = Math.floor(Math.random()*97) - 48;
-                mouse.position.z = Math.floor(Math.random()*97) - 48;
+            if (Math.sqrt(Math.pow(mouse.position.x - snake.state.segmentList[0].position.x, 2) + 
+            Math.pow(mouse.position.z - snake.state.segmentList[0].position.z, 2)) < 7) {
+                console.log("old pos:" + mouse.position.x + " " + mouse.position.z);
+                mouse.position.x = Math.floor(Math.random()*71) - 35;
+                mouse.position.z = Math.floor(Math.random()*71) - 35;
+                console.log("new pos:" + mouse.position.x + " " + mouse.position.z);
+                //mouse.move();
                 snake.addSegment();
                 score ++;
+                console.log('hit');
             }
-        }, 100);
+            //check if snake crashes into fence
+            if (snake.state.segmentList[0].position.x >= 49 || snake.state.segmentList[0].position.x <= -49 ||
+            snake.state.segmentList[0].position.z >= 49 || snake.state.segmentList[0].position.z <= -49) {
+                //game over
+                loader.load( 'fonts/helvetiker_regular.typeface.json', function ( font ) {
+
+                    var geometry = new TextGeometry( 'SCORE:' + score, {
+                        font: font,
+                        size: 80,
+                        height: 5,
+                        curveSegments: 12,
+                        bevelEnabled: true,
+                        bevelThickness: 10,
+                        bevelSize: 8,
+                        bevelOffset: 0,
+                        bevelSegments: 5
+                    } );
+                } );
+                snake.state.direction = 0;
+            }
+        }, 250);
         
        
         

@@ -21,10 +21,7 @@ class Mouse extends Group {
             //gltf.scene.rotateY(Math.PI);
         });
     }
-    //move mouse location
-    move() {
-        gltf.scene.position.set(Math.floor(Math.random()*71) - 35, 0, Math.floor(Math.random()*71) - 35);
-    }
+    
 }
 
 export default Mouse;

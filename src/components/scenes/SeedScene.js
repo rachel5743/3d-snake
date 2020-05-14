@@ -3,6 +3,7 @@ import { BasicLights } from 'lights';
 import { Snake, FarmHouse, FenceGroup, Pool, Mouse} from 'objects';
 import TreeGroup from '../objects/TreeGroup';
 import img from '../../textures/grassTexture.png';
+import json from '../fonts/helvetiker_bold.typeface.json';
 
 class SeedScene extends Scene {
     constructor(camera) {
@@ -54,17 +55,17 @@ class SeedScene extends Scene {
                 console.log("old pos:" + mouse.position.x + " " + mouse.position.z);
                 mouse.position.x = Math.floor(Math.random()*71) - 35;
                 mouse.position.z = Math.floor(Math.random()*71) - 35;
-                console.log("new pos:" + mouse.position.x + " " + mouse.position.z);
-                //mouse.move();
+                //console.log("new pos:" + mouse.position.x + " " + mouse.position.z);
                 snake.addSegment();
                 score ++;
-                console.log('hit');
+                //console.log('hit');
             }
             //check if snake crashes into fence
             if (snake.state.segmentList[0].position.x >= 49 || snake.state.segmentList[0].position.x <= -49 ||
             snake.state.segmentList[0].position.z >= 49 || snake.state.segmentList[0].position.z <= -49) {
                 //game over
-                fLoader.load( '../fonts/helvetiker_bold.typeface.json', function ( fontType ) {
+                /*
+                fLoader.load( json, function ( fontType ) {
 
                     var textGeo = new TextGeometry( 'SCORE:' + score, {
                         font: fontType,
@@ -81,10 +82,22 @@ class SeedScene extends Scene {
                     var textMat = new MeshBasicMaterial({color: textColor});
                     var text =  new Mesh(textGeo, textMat);
                     this.add(text);
-                } );
+                });
+                */
+                
+                var text = document.createElement('div');
+                text.style.position = 'absolute';
+                text.style.width = 1000;
+                text.style.height = 1000;
+                text.style.backgroundColor = "white";
+                text.innerHTML = "Score: " + score;
+                text.style.top = 300 + 'px';
+                text.style.left = 600 + 'px';
+                document.body.appendChild(text);
+                
+                
                 snake.state.direction = 0;
             }
-<<<<<<< HEAD
         }, 200);
         
        
@@ -99,9 +112,6 @@ class SeedScene extends Scene {
         point.position.z = Math.floor(Math.random()*97) - 48;
         this.add(point);*/
 
-=======
-        }, 250);
->>>>>>> 3a42ffbe44bed2f5b8a0c9445f3da93d626172d9
     
         // Make lights
         const lights = new BasicLights();
@@ -131,6 +141,7 @@ class SeedScene extends Scene {
             obj.update(timeStamp);
         }
     }
+
 
 }
 

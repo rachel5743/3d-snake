@@ -84,24 +84,7 @@ class SeedScene extends Scene {
                 } );
                 snake.state.direction = 0;
             }
-<<<<<<< HEAD
-        }, 200);
-        
-       
-        
-
-        /*
-        var pointGeom = new SphereGeometry(1, 32, 32);
-        var pointMat = new MeshPhongMaterial({color: 0xffff00});
-        var point = new Mesh(sphereGeom, pointMat);
-        point.position.y = 1;
-        point.position.x = Math.floor(Math.random()*97) - 48;
-        point.position.z = Math.floor(Math.random()*97) - 48;
-        this.add(point);*/
-
-=======
         }, 250);
->>>>>>> 3a42ffbe44bed2f5b8a0c9445f3da93d626172d9
     
         // Make lights
         const lights = new BasicLights();

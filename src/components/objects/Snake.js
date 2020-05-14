@@ -23,11 +23,11 @@ class Snake extends Group {
         this.moveDown.bind(this);
         this.moveLeft.bind(this);
 
-        // Initialize snake head
-        this.addSegment();
-        this.addSegment();
-        this.addSegment();
-        this.addSegment();
+        // Initialize snake head 
+        // (Added extra segments to test / show snake body; for initial snake, modify this as desired!)
+        for (let i = 0; i < 30; i++) {
+            this.addSegment();
+        }
 
         // Get snake to move using WASD and arrow keys
         document.addEventListener("keydown", onDocumentKeyDown, false);
@@ -66,6 +66,7 @@ class Snake extends Group {
         }
 
         // Otherwise (if snake is already moving), adjust relative direction
+        // This code loosely adapted from https://threejs.org/examples/misc_controls_pointerlock.html
         var originalDirection = this.state.direction;
         switch (event.keyCode) {
             case 38:

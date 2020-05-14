@@ -2,7 +2,7 @@ import { Scene, Color, PlaneGeometry, MeshPhongMaterial, Mesh, DoubleSide, Textu
 import { BasicLights } from 'lights';
 import { Snake, FarmHouse, FenceGroup, Pool, Mouse} from 'objects';
 import TreeGroup from '../objects/TreeGroup';
-//import Mouse from '../objects/Mouse';
+import img from '../../textures/grassTexture.png';
 
 class SeedScene extends Scene {
     constructor(camera) {
@@ -20,7 +20,7 @@ class SeedScene extends Scene {
 
         // Make a plane for the snake to roll around in 
         // Texture made with the help of https://mebiusbox.github.io/contents/EffectTextureMaker/
-        var grassTexture = new TextureLoader().load('src/textures/grassTexture.jpg');
+        var grassTexture = new TextureLoader().load(img);
         var geometry = new PlaneGeometry(100, 100, 32);
         var material = new MeshPhongMaterial( { color: 0xD2B48C, side: DoubleSide, map: grassTexture } );
         var plane = new Mesh(geometry, material);

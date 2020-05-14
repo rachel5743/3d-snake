@@ -16,10 +16,8 @@ const scene = new SeedScene(camera);
 const renderer = new WebGLRenderer({ antialias: true });
 
 // Set up camera
-//camera.position.set(0, 100, -100);
 var snakeHeadPos = scene.state.snake.state.segmentList[0].position;
 camera.position.set(1, 1, 1);
-//camera.lookAt(new Vector3(0, 0, 0));
 camera.lookAt(new Vector3(0, 1, 50));
 
 // Set up renderer, canvas, and minor CSS adjustments
@@ -29,11 +27,6 @@ canvas.style.display = 'block'; // Removes padding below canvas
 document.body.style.margin = 0; // Removes margin around page
 document.body.style.overflow = 'hidden'; // Fix scrolling
 document.body.appendChild(canvas);
-
-// Set up controls
-// const controls = new OrbitControls(camera, canvas);
-// controls.enablePan = false;
-// controls.update();
 
 // Render loop
 const onAnimationFrameHandler = (timeStamp) => {

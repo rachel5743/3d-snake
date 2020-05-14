@@ -42,11 +42,13 @@ class SeedScene extends Scene {
         //text loader to display score at end
         var loader = new FontLoader();
 
-        // Make snake move automatically (should this be in Snake.js?)
         window.setInterval(function() {
+            // Make snake move automatically
             if (snake.state.direction != 0) {
                 snake.moveSnake(snake.state.direction);
             }
+
+            // Mouse move code
             if (Math.sqrt(Math.pow(mouse.position.x - snake.state.segmentList[0].position.x, 2) + 
             Math.pow(mouse.position.z - snake.state.segmentList[0].position.z, 2)) < 7) {
                 console.log("old pos:" + mouse.position.x + " " + mouse.position.z);
@@ -79,19 +81,6 @@ class SeedScene extends Scene {
                 snake.state.direction = 0;
             }
         }, 250);
-        
-       
-        
-
-        /*
-        var pointGeom = new SphereGeometry(1, 32, 32);
-        var pointMat = new MeshPhongMaterial({color: 0xffff00});
-        var point = new Mesh(sphereGeom, pointMat);
-        point.position.y = 1;
-        point.position.x = Math.floor(Math.random()*97) - 48;
-        point.position.z = Math.floor(Math.random()*97) - 48;
-        this.add(point);*/
-
     
         // Make lights
         const lights = new BasicLights();

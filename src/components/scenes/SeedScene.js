@@ -1,4 +1,4 @@
-import { Scene, Color, PlaneGeometry, MeshPhongMaterial, Mesh, DoubleSide, TextureLoader, FontLoader, TextGeometry } from 'three';
+import { Scene, Color, PlaneGeometry, MeshPhongMaterial, Mesh, DoubleSide, TextureLoader, FontLoader, TextGeometry, MeshBasicMaterial } from 'three';
 import { BasicLights } from 'lights';
 import { Snake, FarmHouse, FenceGroup, Pool, Mouse} from 'objects';
 import TreeGroup from '../objects/TreeGroup';
@@ -40,7 +40,7 @@ class SeedScene extends Scene {
         var score = 0;
 
         //text loader to display score at end
-        var loader = new FontLoader();
+        var fLoader = new FontLoader();
 
         // Make snake move automatically (should this be in Snake.js?)
         window.setInterval(function() {
@@ -62,10 +62,10 @@ class SeedScene extends Scene {
             if (snake.state.segmentList[0].position.x >= 49 || snake.state.segmentList[0].position.x <= -49 ||
             snake.state.segmentList[0].position.z >= 49 || snake.state.segmentList[0].position.z <= -49) {
                 //game over
-                loader.load( 'fonts/helvetiker_regular.typeface.json', function ( font ) {
+                fLoader.load( '../fonts/helvetiker_bold.typeface.json', function ( fontType ) {
 
-                    var geometry = new TextGeometry( 'SCORE:' + score, {
-                        font: font,
+                    var textGeo = new TextGeometry( 'SCORE:' + score, {
+                        font: fontType,
                         size: 80,
                         height: 5,
                         curveSegments: 12,
@@ -75,10 +75,14 @@ class SeedScene extends Scene {
                         bevelOffset: 0,
                         bevelSegments: 5
                     } );
+                    var textColor = new Color(0xFF0000);
+                    var textMat = new MeshBasicMaterial({color: textColor});
+                    var text =  new Mesh(textGeo, textMat);
+                    this.add(text);
                 } );
                 snake.state.direction = 0;
             }
-        }, 250);
+        }, 200);
         
        
         

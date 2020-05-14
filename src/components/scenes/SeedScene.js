@@ -98,6 +98,7 @@ class SeedScene extends Scene {
                 
                 snake.state.direction = 0;
             }
+<<<<<<< HEAD
         }, 200);
         
        
@@ -112,6 +113,9 @@ class SeedScene extends Scene {
         point.position.z = Math.floor(Math.random()*97) - 48;
         this.add(point);*/
 
+=======
+        }, 250);
+>>>>>>> 891be767842b53247db04662001bba6d4d24b47b
     
         // Make lights
         const lights = new BasicLights();
